@@ -1,5 +1,15 @@
 {
-  "manifest_version": 3,
-  "name": "My Extension",
-  "version": "1.0.1"
-}
+    "manifest_version": 3,
+    "name": "Dark Pattern",
+    "description": "Estensione per individuazione design malevoli",
+    "version": "1.0",
+    "permissions": [
+      "tabs", "scripting"
+    ],
+    "host_permissions": [
+      "https://developer.chrome.com/"
+    ],
+    "action": {
+      "default_popup": "main.html"
+    }
+  }
