@@ -1,15 +1,21 @@
-{
-    "manifest_version": 3,
+  {
     "name": "Dark Pattern",
-    "description": "Estensione per individuazione design malevoli",
-    "version": "1.0",
-    "permissions": [
-      "tabs", "scripting"
-    ],
-    "host_permissions": [
-      "https://developer.chrome.com/"
+    "version": "0.1.0",
+    "description": "Estensione per l'individuazione di Dark pattern",
+    "manifest_version": 3,
+    
+    "permissions": ["activeTab", "tabs", "scripting", "storage"],
+    "host_permissions": ["https://*"],
+    "background": {
+      "service_worker": "background.js"
+    },
+    "content_scripts": [
+      {
+        "matches": ["<all_urls>"],
+        "js": ["content.js"]
+      }
     ],
     "action": {
       "default_popup": "main.html"
     }
-  }
+}

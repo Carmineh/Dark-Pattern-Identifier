@@ -1,4 +1,36 @@
+/*
+Colori usati:
+ - 2d6a4f => Background
+ - 4a4e69
+ - 9a8c98
+ - c9ada7
+ - f2e9e4
+*/
+
+:root{
+    --background: #2d6a4f;
+    --border: #52B78850;
+}
 body{
-    width: 600px;
-    height: 400px;
+    width: 500px;
+    height: 300px;
+    background-color: var(--background) !important;
+  /*border-style: solid;
+    border-color: var(--border);
+    border-width: 3px;*/
+}
+
+.title_section{
+    border:2px solid red;
+    height: 15%;
+}
+
+.first_section{
+    border:2px solid blue;
+    height: 50%;
+}
+
+.second_section{
+    border:2px solid green;
+    height: 35%;
 }
