@@ -5,17 +5,19 @@
     "manifest_version": 3,
     
     "permissions": ["activeTab", "tabs", "scripting", "storage"],
-    "host_permissions": ["https://*"],
+    "host_permissions": ["https://www.developer.chrome.com/*"],
     "background": {
       "service_worker": "background.js"
     },
     "content_scripts": [
       {
         "matches": ["<all_urls>"],
-        "js": ["content.js"]
+        "js": ["utils/bootstrap/js/jquery-3.7.0.js" , "content.js"]
       }
     ],
     "action": {
-      "default_popup": "main.html"
+
+      "default_popup": "main.html",
+      "default_title": "Dark Pattern Identifier"
     }
 }

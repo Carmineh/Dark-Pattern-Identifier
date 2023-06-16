@@ -1,36 +1,81 @@
 /*
 Colori usati:
- - 2d6a4f => Background
- - 4a4e69
- - 9a8c98
- - c9ada7
- - f2e9e4
+
+    TODO Scegliere pattern colori da usare! 
 */
 
 :root{
-    --background: #2d6a4f;
-    --border: #52B78850;
+    --background: rgba(204, 203, 201, 0.627);
+    --div_bg: rgba(128, 128, 128, 0.464);
 }
 body{
-    width: 500px;
-    height: 300px;
+    width: 350px;
+    height: 350px;
     background-color: var(--background) !important;
-  /*border-style: solid;
-    border-color: var(--border);
-    border-width: 3px;*/
+    padding: 10px;
 }
 
-.title_section{
+/* HEADER SECTION*/
+.header{
     border:2px solid red;
-    height: 15%;
+    height: 20%;
 }
 
-.first_section{
-    border:2px solid blue;
+/* MAIN SECTION*/
+.main__section{
+    margin: 0.3em;
+    background-color: white;
+    border-radius: 6px;
     height: 50%;
+    box-shadow: 3px 2px 5px var(--div_bg);
+    padding: 1px;
 }
 
-.second_section{
-    border:2px solid green;
-    height: 35%;
+.list__cmds{
+    margin-top: 1em;
+    border:2px solid red;
+    padding: 5px;
+    margin: 5px;
 }
+
+.list__cmds a{
+    text-decoration: none;
+    color: rgb(191, 58, 60);
+    font-weight: bold;
+    font-size: 1.3em;
+}
+
+#DP__Type{
+    margin-top: 10px;
+    font-weight: 500;
+}
+
+#CUR__Website{
+    font-weight: 500;
+    font-size: larger;
+}
+
+/* FOOTER SECTION */
+.footer{
+    border: 2px solid purple;
+    height: 20%;
+    margin-top: 1em;
+}
+
+.footer__text{
+    font-size: 10px;
+    color: gray;
+}
+
+/* UTILS */
+.center{
+    text-align: center;
+}
+
+hr.solid{
+    border-top: 2px solid black;
+    width: 80%;
+    height: 2px;
+    margin-left: 10%;
+}
+

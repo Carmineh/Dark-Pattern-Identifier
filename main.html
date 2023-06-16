@@ -7,29 +7,47 @@
         
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="style.css" />
-        <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="utils/bootstrap/css/bootstrap.min.css">
 
         <!-- Bootstrap JavaScript -->
-        <script src="bootstrap/js/jquery-3.7.0.js"></script>
-        <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="utils/bootstrap/js/jquery-3.7.0.js"></script>
+        <script src="utils/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 
     </head>
+    <!-- <hr class="solid"> Divisore -->
     <body>
-       <div class="title_section">
-            <h2>Dark Pattern</h2>
+       <div class="header">
+            <img src="images/test_img.png" class="icon" alt="">
+            <!--<h6 class="title">Dark Pattern<br>Identifier</h2>-->
        </div>   
+       
+       <div class="main__section">
+         <div class="main_header">
+            <!-- <button class="testBottone" id="testBottone">Click me</button>  -->
+            <div class="list__cmds center">
+               <a href="" class="list__dec"> < </a>
+               # out of # <!-- TODO Trovare modo di aggiornare il testo -->
+               <a href="" class="list__inc"> > </a>
 
-       <div class="first_section">
-            Prima Sezione
+               <p id="DP__Type">Tipologia</p>
+            </div>
+
+            <hr class="solid">
+
+            <p id="CUR__Website" class="center">https://example.com/</p>
+         </div>
        </div>
 
-       <div class="second_section">
-            Seconda Sezione
-       </div>
+    
+       <div class="footer">
+         <p class="footer__text center"> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and </p>
+      </div>
+
+
         
 
 
-        <script src="popupScript.js"></script>
+        <script src="popup.js"></script>
     </body>
 </html>
