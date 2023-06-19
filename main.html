@@ -1,53 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        
-        <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="style.css" />
-        <link rel="stylesheet" href="utils/bootstrap/css/bootstrap.min.css">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-        <!-- Bootstrap JavaScript -->
-        <script src="utils/bootstrap/js/jquery-3.7.0.js"></script>
-        <script src="utils/bootstrap/js/bootstrap.bundle.min.js"></script>
+		<!-- Bootstrap CSS -->
+		<link rel="stylesheet" href="style.css" />
+		<link rel="stylesheet" href="utils/bootstrap/css/bootstrap.min.css" />
 
+		<!-- Bootstrap JavaScript -->
+		<script src="utils/bootstrap/js/jquery-3.7.0.js"></script>
+		<script src="utils/bootstrap/js/bootstrap.bundle.min.js"></script>
+	</head>
+	<!-- <hr class="solid"> Divisore -->
+	<body>
+		<div class="header">
+			<div class="logo">
+				<img src="images/icon.png" class="icon" alt="icon" />
+				<h6 class="title">Dark Pattern<br />Identifier</h6>
+			</div>
 
-    </head>
-    <!-- <hr class="solid"> Divisore -->
-    <body>
-       <div class="header">
-            <img src="images/test_img.png" class="icon" alt="">
-            <!--<h6 class="title">Dark Pattern<br>Identifier</h2>-->
-       </div>   
-       
-       <div class="main__section">
-         <div class="main_header">
-            <button class="testBottone">Click me</button>
-            <div class="list__cmds center">
-               <a href="" class="list__dec"> < </a>
-               # out of # <!-- TODO Trovare modo di aggiornare il testo -->
-               <a href="" class="list__inc"> > </a>
+			<div class="switch__cont">
+				<div class="container">
+					<label class="switch"
+						><input type="checkbox" />
+						<div></div>
+					</label>
+				</div>
+			</div>
+		</div>
 
-               <p id="DP__Type">Tipologia</p>
-            </div>
+		<div class="main__section">
+			<div class="main__header">
+				<div class="list__cmds center">
+					<a href="" id="list__dec"> < </a>
+					# out of #
+					<!-- TODO Trovare modo di aggiornare il testo -->
+					<a href="" id="list__inc"> > </a>
+					<br />
+					<a href="" id="DP_Type">Tipologia</a>
+				</div>
 
-            <hr class="solid">
+				<div class="CUR__WSContainer center">
+					<hr class="solid" />
+					<p id="CUR__Website" class="center">https://example.com/</p>
+				</div>
+			</div>
+		</div>
 
-            <p id="CUR__Website" class="center">https://example.com/</p>
-         </div>
-       </div>
+		<div class="footer">
+			<p class="footer__text center">
+				Lorem Ipsum is simply dummy text of the printing and typesetting
+				industry. Lorem Ipsum has been the industry's standard dummy text ever
+				since the 1500s, when an unknown printer took a galley of type and
+			</p>
+		</div>
 
-    
-       <div class="footer">
-         <p class="footer__text center"> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and </p>
-      </div>
-
-
-        
-
-
-        <script src="popup.js"></script>
-    </body>
+		<script src="popup.js"></script>
+	</body>
 </html>

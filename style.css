@@ -1,58 +1,105 @@
 /*
 Colori usati:
 
-    TODO Scegliere pattern colori da usare! 
+    TODO Scegliere pattern colori da usare;
+    TODO Rendere tutti i colori usati variabili;
+    TODO Aggiungere Switch nell'header;
+    TODO Modificare Main__Section (Centrare e cambiare pattern colori).
+    
+    
 */
 
 :root{
-    --background: rgba(204, 203, 201, 0.627);
-    --div_bg: rgba(128, 128, 128, 0.464);
+    --background: #1f1f1f;
+    --div_bg: #393939;
+    --gold: #bf9b30;
+    --span: black;
+    --text: white;
+    --text__footer: gray;
 }
+
 body{
     width: 350px;
-    height: 350px;
+    height: 330px;
     background-color: var(--background) !important;
-    padding: 10px;
+    padding: 15px;
 }
 
 /* HEADER SECTION*/
 .header{
-    border:2px solid red;
+    /*border:2px solid red;*/
     height: 20%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.logo{
+  display: flex;
+  align-items: center;
+  
+}
+
+.icon{
+    width: 60px;
+    height: 60px;
+}
+
+.title{
+  color: var(--gold);
+  margin-left: 7px;
+}
+
+.switch__cont{
+  display: flex;
+  align-items: center;
 }
 
 /* MAIN SECTION*/
 .main__section{
-    margin: 0.3em;
-    background-color: white;
+    height: 45%;
+    border: 2px solid var(--gold);
+    margin-top: 5px;
+    background-color: var(--div_bg);
     border-radius: 6px;
-    height: 50%;
     box-shadow: 3px 2px 5px var(--div_bg);
-    padding: 1px;
+    padding: 2px;
 }
 
 .list__cmds{
+    height: 50px;
     margin-top: 1em;
-    border:2px solid red;
+    /* border:2px solid white; */
     padding: 5px;
     margin: 5px;
+    color: var(--text);
 }
 
-.list__cmds a{
+#list__inc , #list__dec {
+    margin: 10px;
     text-decoration: none;
-    color: rgb(191, 58, 60);
+    color: var(--gold);
     font-weight: bold;
     font-size: 1.3em;
 }
 
-#DP__Type{
-    margin-top: 10px;
+#DP_Type{
+    text-decoration: none;
     font-weight: 500;
+    color: var(--text);
+}
+
+
+.CUR__WSContainer{
+    /* border: 1px solid red; */
+    margin-top: 25px;
 }
 
 #CUR__Website{
-    font-weight: 500;
+    margin-top: 7px;
+    font-weight: 3000;
     font-size: larger;
+    color: var(--gold);
 }
 
 /* FOOTER SECTION */
@@ -64,7 +111,7 @@ body{
 
 .footer__text{
     font-size: 10px;
-    color: gray;
+    color: var(--text__footer);
 }
 
 /* UTILS */
@@ -73,9 +120,58 @@ body{
 }
 
 hr.solid{
-    border-top: 2px solid black;
+    border-top: 2px solid var(--span);
     width: 80%;
     height: 2px;
     margin-left: 10%;
+    margin-bottom: 0.2em;
 }
 
+/* SWITCH */
+.container {
+    /* position: absolute; */
+    top: 0; right: 0; bottom: 0; left: 0;
+    height: 40px;
+    /* margin: auto; */
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  /** Switch
+   -------------------------------------*/
+  
+  .switch input {
+    position: absolute;
+    opacity: 0;
+  }
+  
+  /**
+   * 1. Adjust this to size
+   */
+  
+  .switch {
+    display: inline-block;
+    font-size: 17px; /* 1 */
+    height: 1em;
+    width: 2em;
+    background: #BDB9A6;
+    border-radius: 1em;
+  }
+
+  
+  .switch div {
+    height: 1em;
+    width: 1em;
+    border-radius: 1em;
+    background: #FFF;
+    box-shadow: 0 0.1em 0.3em rgba(0,0,0,0.3);
+    -webkit-transition: all 300ms;
+       -moz-transition: all 300ms;
+            transition: all 300ms;
+  }
+  
+  .switch input:checked + div {
+    -webkit-transform: translate3d(100%, 0, 0);
+       -moz-transform: translate3d(100%, 0, 0);
+            transform: translate3d(100%, 0, 0);
+  }

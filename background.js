@@ -16,3 +16,4 @@ chrome.storage.local.onChanged.addListener((changes , namespace) => {
     chrome.action.setBadgeText({text : darkPatternIdentified});
         
 });
+
