@@ -1,10 +1,10 @@
 {
   "name": "Dark Pattern",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Estensione per l'individuazione di Dark pattern",
   "manifest_version": 3,
     
-  "permissions": ["activeTab", "tabs", "scripting", "storage"],
+  "permissions": ["activeTab", "tabs", "scripting"],
   "host_permissions": ["https://www.developer.chrome.com/*"],
   "background": {
     "service_worker": "background.js"
