@@ -57,7 +57,7 @@ body{
 
 /* MAIN SECTION*/
 .main__section{
-    height: 45%;
+    height: 49%;
     border: 2px solid var(--gold);
     margin-top: 5px;
     background-color: var(--div_bg);
@@ -67,12 +67,17 @@ body{
 }
 
 .list__cmds{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
     height: 50px;
-    margin-top: 1em;
+    /* margin-top: 1em; */
     /* border:2px solid white; */
-    padding: 5px;
-    margin: 5px;
     color: var(--text);
+}
+
+.list__index{
+    margin-top: 15px;
 }
 
 #list__inc , #list__dec {
@@ -80,25 +85,26 @@ body{
     text-decoration: none;
     color: var(--gold);
     font-weight: bold;
-    font-size: 1.3em;
+    font-size: 20px;
 }
 
 #DP_Type{
     text-decoration: none;
     font-weight: 500;
     color: var(--text);
+    display: flex;
+    justify-content: center;
 }
 
-
-.CUR__WSContainer{
-    /* border: 1px solid red; */
+/* .CUR__WSContainer{
+    border: 1px solid red;
     margin-top: 25px;
-}
+} */
 
-#CUR__Website{
-    margin-top: 7px;
-    font-weight: 3000;
-    font-size: larger;
+#CUR__Website{ 
+    margin-top: 5px;
+    font-weight: 4000;
+    font-size: large;
     color: var(--gold);
 }
 

@@ -1,7 +1,7 @@
 {
   "name": "Dark Pattern",
-  "version": "0.2.0",
-  "description": "Estensione per l'individuazione di Dark pattern",
+  "version": "0.3.0",
+  "description": "Web Extension to identifies specific dark pattern in websites",
   "manifest_version": 3,
     
   "permissions": ["activeTab", "tabs", "scripting"],
@@ -19,7 +19,8 @@
     "default_icon": {                
       "16": "images/icon16.png",
       "24": "images/icon24.png",     
-      "32": "images/icon32.png"      
+      "32": "images/icon32.png",
+      "128": "images/icon128.png"
     },
     "default_popup": "main.html",
     "default_title": "Dark Pattern Identifier"
