@@ -10,6 +10,8 @@ var verifiedElements = [];
 $(window).on("load", () => {
 	console.log("Esecuzione Content Script");
 
+	// createDB();
+
 	chrome.runtime.sendMessage({
 		message: "content__retrieve",
 		payload: "textComparison",
@@ -40,8 +42,9 @@ $(window).on("load", () => {
 		}
 		if (request.message.includes("scrollTo")) {
 			pos = request.payload;
-			console.log(verifiedElements[pos]);
-			verifiedElements[pos].scrollIntoView();
+			if (pos > 0) {
+				verifiedElements[pos - 1].scrollIntoView();
+			}
 		}
 	});
 

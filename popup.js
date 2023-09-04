@@ -10,13 +10,15 @@ const listContent = $(".list__index");
 const listDecrement = $("#list__dec");
 const listIncrement = $("#list__inc");
 const switchStatus = $("#switch__status");
+const darkPattern_Type = $("#DP_Type");
+const currentWebsite = $("#CUR__Website");
 
 let currentIndex = 1;
 let maxIndex = 1;
 
 //Retrieving all the elements of DB at the start
 retrieveAllDatabase();
-testPrint();
+updateTextList();
 
 //Updating Database when switch change status
 switchStatus.on("change", () => {
@@ -64,18 +66,9 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 	}
 });
 
-//Update Current Site URL
-chrome.tabs.query({ active: true, lastFocusedWindow: true }, (tabs) => {
-	let url = tabs[0].url;
-	var page = url.substring(0, url.indexOf("/", 9) + 1);
-	console.log(url);
-	console.log(page);
-	$("#CUR__Website").text(page);
-});
-
 // Functions for the list management
 function updateCounterList(numDarkPatternIdentified) {
-	if (numDarkPatternIdentified > 0) {
+	if (numDarkPatternIdentified >= 0) {
 		maxIndex = numDarkPatternIdentified;
 		currentIndex = 0;
 		updateTextList();
@@ -88,7 +81,7 @@ function nextItemList() {
 	//Send a message to content to change focus
 	if (switchStatus.is(":checked")) {
 		if (currentIndex + 1 > maxIndex) {
-			currentIndex = 1;
+			currentIndex = 0;
 		} else {
 			currentIndex = currentIndex + 1;
 		}
@@ -106,7 +99,7 @@ function previousItemList() {
 	//Click (<): Change Focus on the object
 	//Send a message to content to change focus
 	if (switchStatus.is(":checked")) {
-		if (currentIndex - 1 <= 0) {
+		if (currentIndex - 1 < 0) {
 			currentIndex = maxIndex;
 		} else {
 			currentIndex = currentIndex - 1;
@@ -123,8 +116,20 @@ function updateTextList() {
 	if (switchStatus.is(":checked")) {
 		let newString = currentIndex + " out of " + maxIndex;
 		listContent.text(newString);
+		darkPattern_Type.text("Hidden Information");
+
+		//Update Current Site URL
+		chrome.tabs.query({ active: true, lastFocusedWindow: true }, (tabs) => {
+			let url = tabs[0].url;
+			var page = url.substring(0, url.indexOf("/", 9) + 1);
+			console.log(url);
+			console.log(page);
+			currentWebsite.text(page);
+		});
 	} else {
 		listContent.text("Activate Switch to track DP");
+		darkPattern_Type.text(" ");
+		currentWebsite.text("...");
 	}
 }
 
