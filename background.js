@@ -1,11 +1,11 @@
 console.log("Esecuzione Background Script");
 /*
     !TODO: Implementare Database: indexedDB
-    TODO:  Inviare una richiesta al 'Popup' per aggiornare Badge [Numero di DP Individuati]
+    !TODO:  Inviare una richiesta al 'Popup' per aggiornare Badge [Numero di DP Individuati]
     !TODO: Implementare metodi: Inserimento, Cancellazione, Modifica, Retrieve Dati 
-    TODO:  Implementare Sistema Messagistica: Content <=> Background , Popup <=> Background
-    TODO:  Implementare Promise nei metodi del Database
-    ? Implementare history dei dark pattern individuati
+    !TODO:  Implementare Sistema Messagistica: Content <=> Background , Popup <=> Background
+    !TODO:  Implementare Promise nei metodi del Database
+	!TODO:  Implementare per ogni richiesta al DB il send per il content script
 */
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
@@ -20,7 +20,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 		});
 	} else if (request.message === "update") {
 		let update_request = updateValue(request.payload);
-
 		update_request.then((res) => {
 			chrome.runtime.sendMessage({
 				message: "update_success",
@@ -36,13 +35,36 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 				payload: res,
 			});
 		});
+	} else if (request.message === "content__delete") {
+		let delete_request = deleteValue(request.payload);
+	} else if (request.message === "content__update") {
+		let update_request = updateValue(request.payload);
+	} else if (request.message === "content__retrieve") {
+		console.log("Content Retreve");
+		let retrieve_request = retrieveValue(request.payload);
+
+		retrieve_request.then((res) => {
+			console.log("AAA " + res);
+			chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
+				var activeTab = tabs[0];
+				chrome.tabs.sendMessage(activeTab.id, {
+					message: "retrieve_success " + request.payload,
+					payload: res,
+				});
+			});
+		});
+	} else if (request.message === "update__badge") {
+		let newValue = request.payload.value;
+		chrome.action.setBadgeText({ text: "" + newValue });
+		chrome.action.setBadgeBackgroundColor({ color: "#A30000" });
 	}
 });
 /*
       Database Implementation
       Utils: Name[] , Value[];
         - Name[switchValue] , Value[true/false];
-        - Name[darkPatternIdentified] , Value[#]; => # = Numero DP Identificati
+        - Name[numDarkPatternIdentified] , Value[#]; => # = Numero DP Identificati
+		- Name[darkPatternIdentified] , Value[List]; => List = Dark Pattern Identificati
 */
 let defaultValues = [
 	{
@@ -50,10 +72,39 @@ let defaultValues = [
 		value: true,
 	},
 	{
-		name: "darkPatternIdentified",
+		name: "numDarkPatternIdentified",
 		value: 0,
 	},
+	{
+		name: "darkPatternIdentified",
+		value: null,
+	},
+	{
+		name: "textComparison",
+		value: null,
+	},
 ];
+
+let textComparisonArray = fetch("common.json")
+	.then((response) => {
+		if (!response.ok) {
+			throw new Error("Errore nella richiesta del file JSON");
+		}
+		return response.json();
+	})
+	.then((jsonObject) => {
+		console.log(jsonObject.TextComparison);
+		const setText = defaultValues.map((obj) => {
+			if (obj.name === "textComparison") {
+				obj.value = jsonObject.TextComparison;
+			}
+		});
+	})
+	.catch((error) => {
+		console.log("Errore: " + error);
+	});
+
+// console.log(textComparisonArray);
 
 let db = null;
 
@@ -148,7 +199,7 @@ function deleteValue(name) {
 			};
 
 			deleteTransaction.onerror = function () {
-				console.log("[ERROR] Problema ne lla rimozione");
+				console.log("[ERROR] Problema nella rimozione");
 				resolve(false);
 			};
 

@@ -1,6 +1,6 @@
 {
   "name": "Dark Pattern",
-  "version": "0.3.0",
+  "version": "1.0.0",
   "description": "Web Extension to identifies specific dark pattern in websites",
   "manifest_version": 3,
     

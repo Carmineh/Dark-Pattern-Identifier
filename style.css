@@ -1,12 +1,9 @@
 /*
 Colori usati:
-
-    TODO Scegliere pattern colori da usare;
-    TODO Rendere tutti i colori usati variabili;
-    TODO Aggiungere Switch nell'header;
-    TODO Modificare Main__Section (Centrare e cambiare pattern colori).
-    
-    
+    !TODO Scegliere pattern colori da usare;
+    !TODO Rendere tutti i colori usati variabili;
+    !TODO Aggiungere Switch nell'header;
+    !TODO Modificare Main__Section (Centrare e cambiare pattern colori).
 */
 
 :root{
@@ -86,6 +83,7 @@ body{
     color: var(--gold);
     font-weight: bold;
     font-size: 20px;
+    cursor: pointer;
 }
 
 #DP_Type{
