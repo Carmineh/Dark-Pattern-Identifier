@@ -20,7 +20,7 @@ Specifically this extension can detect **Bait and Switch** and **Hidden Informat
 
 <br>
 
-### What are Dark Patterns?
+## What are Dark Patterns?
 The study of the Dark Pattern started in 2010 by *Harry Brignull* that defines Dark Pattern as:
 > Tricks used in websites and apps that make you do things that you didn't mean to, like buying or signing up for something.
 
