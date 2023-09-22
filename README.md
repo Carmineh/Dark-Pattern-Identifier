@@ -14,19 +14,25 @@
   
 </div>
 
-## About
+## :clipboard: About
 Dark Pattern Identifier is a chrome extension that analyze WebPage DOM to detect *deceptive designs* (Dark Pattern).
 Specifically this extension can detect **Bait and Switch** and **Hidden Information** instance.
 
 <br>
 
-## What are Dark Patterns?
+## :newspaper: What are Dark Patterns?
 The study of the Dark Pattern started in 2010 by *Harry Brignull* that defines Dark Pattern as:
 > Tricks used in websites and apps that make you do things that you didn't mean to, like buying or signing up for something.
 
 <br>
 
-## How to...
+## :open_file_folder: Repository Map
+- **[Main](https://github.com/Carmineh/Dark-Pattern-Identifier):** Common files between the two implementations;
+- **[Bait-And-Switch](https://github.com/Carmineh/Dark-Pattern-Identifier/tree/bait-and-switch):** Bait and Switch implementation code;
+- **[Hidden-Information](https://github.com/Carmineh/Dark-Pattern-Identifier/tree/hidden-information):** Hidden Information implementation code.
+<br>
+
+## :ledger: How to...
 Check the **[Documentation](https://github.com/Carmineh/Dark-Pattern-Identifier/wiki/Documentation)** page and follow the instructions on how to install and how to use the extension.
 - <p> Supported language: :us:  :it:</p>
 
