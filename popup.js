@@ -16,13 +16,15 @@ const currentWebsite = $("#CUR__Website");
 let currentIndex = 1;
 let maxIndex = 1;
 
+var msgList;
+
 //Retrieving all the elements of DB at the start
 retrieveAllDatabase();
+updateURL();
 updateTextList();
 
 //Updating Database when switch change status
 switchStatus.on("change", () => {
-	console.log("Stato Switch " + switchStatus.is(":checked"));
 	chrome.runtime.sendMessage({
 		message: "update",
 		payload: {
@@ -34,6 +36,7 @@ switchStatus.on("change", () => {
 		message: "content__retrieve",
 		payload: "switchValue",
 	});
+	updateURL();
 });
 
 listIncrement.on("click", (e) => {
@@ -56,12 +59,16 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 	if (request.message.includes("retrieve_success")) {
 		//Retrieve Query
 		if (request.message.includes("switchValue")) {
-			// console.log("[DEBUG] " + request.payload.value);
 			$("#switch__status").prop("checked", request.payload.value);
 		}
 
 		if (request.message.includes("numDarkPatternIdentified")) {
 			updateCounterList(request.payload.value);
+		}
+
+		if (request.message.includes("msgList")) {
+			console.log("MSGLIST ", msgList);
+			msgList = request.payload.value;
 		}
 	}
 });
@@ -85,14 +92,11 @@ function nextItemList() {
 		} else {
 			currentIndex = currentIndex + 1;
 		}
-		console.log("Current " + currentIndex);
-
+		//Send Message to Content with new value [currentIndex]
 		scrollToElement(currentIndex);
 
 		updateTextList();
 	}
-
-	//Send Message to Content with new value [currentIndex]
 }
 
 function previousItemList() {
@@ -104,8 +108,7 @@ function previousItemList() {
 		} else {
 			currentIndex = currentIndex - 1;
 		}
-		console.log("Current " + currentIndex);
-
+		//Send Message to Content with new value [currentIndex]
 		scrollToElement(currentIndex);
 
 		updateTextList();
@@ -114,22 +117,32 @@ function previousItemList() {
 
 function updateTextList() {
 	if (switchStatus.is(":checked")) {
+		updateURL();
 		let newString = currentIndex + " out of " + maxIndex;
 		listContent.text(newString);
-		darkPattern_Type.text("Hidden Information");
+		console.log("INDEX ", currentIndex);
+		if (currentIndex > 0) {
+			darkPattern_Type.text(msgList[currentIndex - 1]);
+		} else {
+			darkPattern_Type.text("...");
+		}
+	} else {
+		listContent.text("Activate Switch to track DP");
+		darkPattern_Type.text(" ");
+	}
+}
 
+function updateURL() {
+	if (switchStatus.is(":checked")) {
 		//Update Current Site URL
 		chrome.tabs.query({ active: true, lastFocusedWindow: true }, (tabs) => {
 			let url = tabs[0].url;
 			var page = url.substring(0, url.indexOf("/", 9) + 1);
-			console.log(url);
-			console.log(page);
 			currentWebsite.text(page);
+			console.log("URL ", page);
 		});
 	} else {
-		listContent.text("Activate Switch to track DP");
-		darkPattern_Type.text(" ");
-		currentWebsite.text("...");
+		currentWebsite.text(" ");
 	}
 }
 
@@ -158,16 +171,14 @@ function retrieveAllDatabase() {
 		message: "retrieve",
 		payload: "darkPatternIdentified",
 	});
-}
 
-function testPrint() {
-	console.log("Max: " + maxIndex);
-	console.log("current" + currentIndex);
+	chrome.runtime.sendMessage({
+		message: "retrieve",
+		payload: "msgList",
+	});
 }
 
 function scrollToElement(element) {
-	console.log("TEST " + element);
-
 	chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
 		var activeTab = tabs[0];
 		chrome.tabs.sendMessage(activeTab.id, {

@@ -42,6 +42,8 @@ $(window).on("load", () => {
 			pos = request.payload;
 			if (pos > 0) {
 				verifiedElements[pos - 1].scrollIntoView();
+			} else {
+				window.scrollTo(0, 0);
 			}
 		}
 	});
@@ -50,7 +52,7 @@ $(window).on("load", () => {
 	//updateElementList(45, null); => Test Call badge update
 });
 
-function updateElementList(numElements, elements) {
+function updateElementList(numElements, elements, msg) {
 	if (switchValue) {
 		chrome.runtime.sendMessage({
 			message: "update",
@@ -68,10 +70,19 @@ function updateElementList(numElements, elements) {
 				value: elements,
 			},
 		});
+
+		//Send a reuqest to DB to save the information hidden that have been found
+		chrome.runtime.sendMessage({
+			message: "update",
+			payload: {
+				name: "msgList",
+				value: msg,
+			},
+		});
 		//Send a request to DB to update the value of the numOfDP
 		updateBadge(numElements);
 	} else {
-		updateBadge("X");
+		updateBadge("");
 	}
 }
 
@@ -90,13 +101,18 @@ function updateBadge(newValue) {
 		Return: an object containing [numDarkpatternIdentified (INT) , darkpatternIdentified (LIST)]
 */
 function findDarkPattern() {
-	const elements = verifyElements();
+	const checkedElements = verifyElements();
+
+	let elements = checkedElements[0];
+	let msg = checkedElements[1];
+
+	console.log(elements.length === msg.length);
 
 	if (switchValue) {
 		elements.forEach((elem) => {
 			elem.style.border = "2px solid red";
 		});
-		updateElementList(elements.length, elements);
+		updateElementList(elements.length, elements, msg);
 	} else {
 		elements.forEach((elem) => {
 			elem.style.border = "none";
@@ -110,6 +126,7 @@ function verifyElements() {
 	const links = document.querySelectorAll("a");
 
 	verifiedElements = [];
+	msgList = [];
 
 	buttons.forEach((elem) => {
 		let computedStyle = window.getComputedStyle(elem);
@@ -128,10 +145,13 @@ function verifyElements() {
 	});
 
 	links.forEach((elem) => {
-		if (textComparisonList.includes(elem.text)) {
-			verifiedElements.push(elem);
-		}
+		textComparisonList.forEach((obj) => {
+			if (obj.name === elem.text) {
+				verifiedElements.push(elem);
+				msgList.push(obj.msg);
+			}
+		});
 	});
 
-	return verifiedElements;
+	return [verifiedElements, msgList];
 }

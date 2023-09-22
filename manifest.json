@@ -1,7 +1,7 @@
 {
-  "name": "Dark Pattern",
-  "version": "1.0.0",
-  "description": "Web Extension to identifies specific dark pattern in websites",
+  "name": "DP Identifier - Hidden Information",
+  "version": "1.0.1",
+  "description": "Web Extension to identifies Hidden Information's instances",
   "manifest_version": 3,
     
   "permissions": ["activeTab", "tabs", "scripting"],
@@ -17,12 +17,12 @@
   ],
   "action": {
     "default_icon": {                
-      "16": "images/icon16.png",
-      "24": "images/icon24.png",     
+      "16": "images/icon16.png",  
       "32": "images/icon32.png",
+	    "48": "images/icon48.png",
       "128": "images/icon128.png"
     },
     "default_popup": "main.html",
-    "default_title": "Dark Pattern Identifier"
+    "default_title": "DP Identifier - Hidden Information"
   }
 }
