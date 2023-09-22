@@ -44,7 +44,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 		let retrieve_request = retrieveValue(request.payload);
 
 		retrieve_request.then((res) => {
-			console.log("AAA " + res);
 			chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
 				var activeTab = tabs[0];
 				chrome.tabs.sendMessage(activeTab.id, {
@@ -81,7 +80,7 @@ let defaultValues = [
 	},
 	{
 		name: "textComparison",
-		value: null,
+		value: {},
 	},
 ];
 
@@ -93,18 +92,18 @@ let textComparisonArray = fetch("common.json")
 		return response.json();
 	})
 	.then((jsonObject) => {
-		console.log(jsonObject.TextComparison);
+		console.log(jsonObject.TextComparison.name);
+		console.log(jsonObject.TextComparison.msg);
 		const setText = defaultValues.map((obj) => {
 			if (obj.name === "textComparison") {
 				obj.value = jsonObject.TextComparison;
+				console.log(obj);
 			}
 		});
 	})
 	.catch((error) => {
 		console.log("Errore: " + error);
 	});
-
-// console.log(textComparisonArray);
 
 let db = null;
 

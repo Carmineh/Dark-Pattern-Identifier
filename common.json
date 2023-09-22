@@ -1,14 +1,14 @@
 {
     "TextComparison" :[
-        "Visualizza Dettagli",
-        "Ulteriori Informazioni",
-        "Nota Legale",
-        "Legal Note",
-        "Più opzioni",
-        "Legal",
-        "Read More",
-        "More Info",
-        "Learn More",
-        "View Details"
+        {"name":"Visualizza Dettagli" , "msg":"It may contain important information"},
+        {"name":"Ulteriori Informazioni" , "msg":"Check for more information"},
+        {"name":"Nota Legale" , "msg":"Information about privacy"},
+        {"name":"Legal Note" , "msg":"Information about privacy"},
+        {"name":"Più opzioni" , "msg":"Extend to get more info"},
+        {"name":"Legal" , "msg":"Information about privacy"},
+        {"name":"Read More" , "msg":"It may contain important hidden information"},
+        {"name":"More Info" , "msg":"Check for more info"},
+        {"name":"Learn More" , "msg":"It may contain specific information about privacy"},
+        {"name":"View Details" , "msg":"It may contain important information"}
     ] 
 }

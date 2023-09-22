@@ -10,8 +10,6 @@ var verifiedElements = [];
 $(window).on("load", () => {
 	console.log("Esecuzione Content Script");
 
-	// createDB();
-
 	chrome.runtime.sendMessage({
 		message: "content__retrieve",
 		payload: "textComparison",
@@ -111,14 +109,21 @@ function verifyElements() {
 	const buttons = document.querySelectorAll("button");
 	const links = document.querySelectorAll("a");
 
-	// console.log("TEXT FD " + textComparisonList);
-	// console.log("Switch FD " + switchValue);
-
 	verifiedElements = [];
 
 	buttons.forEach((elem) => {
-		if (textComparisonList.includes(elem.text)) {
+		let computedStyle = window.getComputedStyle(elem);
+
+		let rgbaValue = computedStyle.backgroundColor;
+		const alpha = parseFloat(rgbaValue.split(",")[3]);
+		const threshold = 0.5;
+
+		if (alpha < threshold && alpha != 0) {
 			verifiedElements.push(elem);
+		} else {
+			if (textComparisonList.includes(elem.text)) {
+				verifiedElements.push(elem);
+			}
 		}
 	});
 
