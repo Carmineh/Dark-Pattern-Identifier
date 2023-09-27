@@ -77,7 +77,7 @@ let defaultValues = [
 	},
 	{
 		name: "darkPatternIdentified",
-		value: null,
+		value: {},
 	},
 	{
 		name: "textComparison",

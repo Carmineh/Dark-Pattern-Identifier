@@ -27,9 +27,11 @@ $(window).on("load", () => {
 		if (request.message.includes("scrollTo")) {
 			pos = request.payload;
 			if (pos > 0) {
-				verifiedElements[pos - 1].scrollIntoView();
-				verifiedElements[pos - 1].style.border = "5px solid pink";
-				verifiedElements[pos - 2].style.border = "none";
+				let element = verifiedElements[pos - 1].element;
+				let prev_element = verifiedElements[pos - 2].element;
+				element.scrollIntoView();
+				element.style.border = "5px solid red";
+				prev_element.style.border = "none";
 			}
 		}
 	});
@@ -66,7 +68,7 @@ function updateElementList(numElements, elements) {
 		//Send a request to DB to update the value of the numOfDP
 		updateBadge(numElements);
 	} else {
-		updateBadge("X");
+		updateBadge("");
 	}
 }
 
@@ -120,7 +122,7 @@ function getCloseButtonLinkDimensions(closeButton) {
 // TODO Aggiungere aggiornamento badge dell'estensione
 // TODO Aggiungere aggiornamento del database
 function checkImageSizes() {
-	verifiedElements = [];
+	verifiedElements = [{}];
 	// Dimensioni massime desiderate
 	const maxWidth = 30;
 	const maxHeight = 30;
@@ -156,11 +158,8 @@ function checkImageSizes() {
 					linkDimensions.width <= maxWidth &&
 					linkDimensions.height <= maxHeight
 				) {
-					verifiedElements.push(imgOrSvg);
+					verifiedElements.push({element : imgOrSvg, link : parentLink.href});
 				}
-
-				// verifiedElements.push(parentLink);
-				// imgOrSvg.style.border = "4px solid blue";
 			}
 		} else if (imgOrSvg.tagName.toLowerCase() === "svg") {
 			const bbox = imgOrSvg.getBBox();
@@ -183,10 +182,8 @@ function checkImageSizes() {
 						linkDimensions.width <= maxWidth &&
 						linkDimensions.height <= maxHeight
 					) {
-						verifiedElements.push(imgOrSvg);
+						verifiedElements.push({element : svgLink, link : parentLink.href});
 					}
-
-					// imgOrSvg.style.border = "4px solid blue";
 					break;
 				}
 			}
@@ -208,10 +205,8 @@ function checkImageSizes() {
 					linkDimensions.width <= maxWidth &&
 					linkDimensions.height <= maxHeight
 				) {
-					verifiedElements.push(imgOrSvg);
+					verifiedElements.push({element : button , link : buttonLink.href});
 				}
-				// verifiedElements.push(buttonLink);
-				// button.style.border = "4px solid blue";
 				break;
 			}
 		}
@@ -232,10 +227,8 @@ function checkImageSizes() {
 					linkDimensions.width <= maxWidth &&
 					linkDimensions.height <= maxHeight
 				) {
-					verifiedElements.push(imgOrSvg);
+					verifiedElements.push({element : showSbCloseButton, link : link.href});
 				}
-				// verifiedElements.push(link);
-				// showSbCloseButton.style.border = "4px solid blue";
 				break;
 			}
 		}
@@ -256,19 +249,14 @@ function checkImageSizes() {
 					linkDimensions.width <= maxWidth &&
 					linkDimensions.height <= maxHeight
 				) {
-					verifiedElements.push(imgOrSvg);
+					verifiedElements.push({element : closeButton, link : link.href});
 				}
-				// verifiedElements.push(link);
-				// closeButton.style.border = "4px solid blue";
 				break;
 			}
 		}
 	}
 
 	if (switchValue) {
-		verifiedElements.forEach((elem) => {
-			// elem.style.border = "5px solid pink";
-		});
 		updateElementList(verifiedElements.length, verifiedElements);
 	} else {
 		verifiedElements.forEach((elem) => {

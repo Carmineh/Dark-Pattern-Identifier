@@ -13,6 +13,7 @@ const switchStatus = $("#switch__status");
 const darkPattern_Type = $("#DP_Type");
 const currentWebsite = $("#CUR__Website");
 
+var darkPatternList;
 let currentIndex = 1;
 let maxIndex = 1;
 
@@ -62,6 +63,9 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
 		if (request.message.includes("numDarkPatternIdentified")) {
 			updateCounterList(request.payload.value);
+		}
+		if(request.message.includes("darkPatternList")) {
+			darkPatternList = request.payload.value;
 		}
 	}
 });
@@ -116,7 +120,6 @@ function updateTextList() {
 	if (switchStatus.is(":checked")) {
 		let newString = currentIndex + " out of " + maxIndex;
 		listContent.text(newString);
-		darkPattern_Type.text("Hidden Information");
 
 		//Update Current Site URL
 		chrome.tabs.query({ active: true, lastFocusedWindow: true }, (tabs) => {
@@ -126,6 +129,16 @@ function updateTextList() {
 			console.log(page);
 			currentWebsite.text(page);
 		});
+		
+		if(currentIndex > 0) {
+			darkPattern_Type.text(darkPatternList[currentIndex - 1].link);
+		} else {
+			darkPattern_Type.text("");
+		}
+
+		console.log(darkPatternList);
+
+
 	} else {
 		listContent.text("Activate Switch to track DP");
 		darkPattern_Type.text(" ");
