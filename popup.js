@@ -8,10 +8,7 @@ const currentWebsite = $("#CUR__Website");
 var darkPatternList;
 let currentIndex = 1;
 let maxIndex = 1;
-
-//Retrieving all the elements of DB at the start
-retrieveAllDatabase();
-updateText("Start");
+let switchValue;
 
 //Updating Database when switch change status
 switchStatus.on("change", () => {
@@ -27,7 +24,11 @@ switchStatus.on("change", () => {
 		message: "content__retrieve",
 		payload: "switchValue",
 	});
+	updateText("Start");
 });
+
+//Retrieving all the elements of DB at the start
+retrieveAllDatabase();
 
 listIncrement.on("click", (e) => {
 	e.preventDefault();
@@ -51,6 +52,8 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 		if (request.message.includes("switchValue")) {
 			// console.log("[DEBUG] " + request.payload.value);
 			$("#switch__status").prop("checked", request.payload.value);
+			switchValue = request.payload.value;
+			updateText("Start");
 		}
 
 		if (request.message.includes("numDarkPatternIdentified")) {
@@ -112,24 +115,22 @@ function updateText(operation) {
 				break;
 
 			case "Start":
-				updateText("URL");
+				getURL().then((url) => {
+					currentURL = url;
+					updateText("URL");
+				});
 				updateText("Message");
 				updateCounterList("DP_List");
 				break;
 
 			case "URL":
-				chrome.tabs.query({ active: true, lastFocusedWindow: true }, (tabs) => {
-					let url = tabs[0].url;
-					var page = url.substring(0, url.indexOf("/", 9) + 1);
-					currentWebsite.text(page);
-					console.log("URL ", page);
-				});
+				currentWebsite.text(currentURL);
 				break;
 
 			case "Message":
 				if (currentIndex - 1 >= 0)
 					// darkPattern_Type.text(msgList[currentIndex - 1]);
-					darkPattern_Type.text("PROVA");
+					darkPattern_Type.text("Message Text");
 				else darkPattern_Type.text(" ");
 
 			case "DP_List":
@@ -141,36 +142,17 @@ function updateText(operation) {
 	} else {
 		listContent.text("Activate Switch to track DP");
 		darkPattern_Type.text(" ");
+		currentWebsite.text("");
 	}
 }
 
-// function updateTextList() {
-// 	if (switchStatus.is(":checked")) {
-// 		let newString = currentIndex + " out of " + maxIndex;
-// 		listContent.text(newString);
-
-// 		//Update Current Site URL
-// 		chrome.tabs.query({ active: true, lastFocusedWindow: true }, (tabs) => {
-// 			let url = tabs[0].url;
-// 			var page = url.substring(0, url.indexOf("/", 9) + 1);
-// 			console.log(url);
-// 			console.log(page);
-// 			currentWebsite.text(page);
-// 		});
-
-// 		if (currentIndex > 0) {
-// 			darkPattern_Type.text(darkPatternList[currentIndex - 1].link);
-// 		} else {
-// 			darkPattern_Type.text("...");
-// 		}
-
-// 		console.log(darkPatternList);
-// 	} else {
-// 		listContent.text("Activate Switch to track DP");
-// 		darkPattern_Type.text(" ");
-// 		currentWebsite.text("...");
-// 	}
-// }
+async function getURL() {
+	let queryOptions = { active: true, lastFocusedWindow: true };
+	let tabs = await chrome.tabs.query(queryOptions);
+	let url = tabs[0].url;
+	var url_cut = url.substring(0, url.indexOf("/", 9) + 1);
+	return url_cut;
+}
 
 function sendMessageContent() {
 	chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
