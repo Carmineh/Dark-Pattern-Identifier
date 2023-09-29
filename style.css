@@ -86,12 +86,20 @@ body{
     cursor: pointer;
 }
 
-#DP_Type{
+#DP_msg{
     text-decoration: none;
     font-weight: 500;
     color: var(--text);
     display: flex;
     justify-content: center;
+}
+
+#DP_Type-Title{
+    text-decoration: none;
+    font-weight: 500;
+    color: var(--text);
+    display: flex;
+    /* justify-content: center; */
 }
 
 /* .CUR__WSContainer{

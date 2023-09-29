@@ -117,10 +117,6 @@ function getCloseButtonLinkDimensions(closeButton) {
 	return { width, height };
 }
 
-// Funzione principale per controllare le dimensioni delle immagini, degli svg, dei pulsanti e dei link
-// TODO Aggiungere bordo agli elementi trovati
-// TODO Aggiungere aggiornamento badge dell'estensione
-// TODO Aggiungere aggiornamento del database
 function checkImageSizes() {
 	verifiedElements = [{}];
 	// Dimensioni massime desiderate
@@ -158,7 +154,7 @@ function checkImageSizes() {
 					linkDimensions.width <= maxWidth &&
 					linkDimensions.height <= maxHeight
 				) {
-					verifiedElements.push({element : imgOrSvg, link : parentLink.href});
+					verifiedElements.push({ element: imgOrSvg, link: parentLink.href });
 				}
 			}
 		} else if (imgOrSvg.tagName.toLowerCase() === "svg") {
@@ -182,7 +178,7 @@ function checkImageSizes() {
 						linkDimensions.width <= maxWidth &&
 						linkDimensions.height <= maxHeight
 					) {
-						verifiedElements.push({element : svgLink, link : parentLink.href});
+						verifiedElements.push({ element: svgLink, link: parentLink.href });
 					}
 					break;
 				}
@@ -205,7 +201,7 @@ function checkImageSizes() {
 					linkDimensions.width <= maxWidth &&
 					linkDimensions.height <= maxHeight
 				) {
-					verifiedElements.push({element : button , link : buttonLink.href});
+					verifiedElements.push({ element: button, link: buttonLink.href });
 				}
 				break;
 			}
@@ -227,7 +223,10 @@ function checkImageSizes() {
 					linkDimensions.width <= maxWidth &&
 					linkDimensions.height <= maxHeight
 				) {
-					verifiedElements.push({element : showSbCloseButton, link : link.href});
+					verifiedElements.push({
+						element: showSbCloseButton,
+						link: link.href,
+					});
 				}
 				break;
 			}
@@ -249,7 +248,7 @@ function checkImageSizes() {
 					linkDimensions.width <= maxWidth &&
 					linkDimensions.height <= maxHeight
 				) {
-					verifiedElements.push({element : closeButton, link : link.href});
+					verifiedElements.push({ element: closeButton, link: link.href });
 				}
 				break;
 			}

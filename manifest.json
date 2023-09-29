@@ -1,6 +1,6 @@
 {
-  "name": "Dark Pattern",
-  "version": "1.0.0",
+  "name": "DP Identifier - Bait and Switch",
+  "version": "1.0.1",
   "description": "Web Extension to identifies specific dark pattern in websites",
   "manifest_version": 3,
     
@@ -23,6 +23,6 @@
       "128": "images/icon128.png"
     },
     "default_popup": "main.html",
-    "default_title": "Dark Pattern Identifier"
+    "default_title": "DP Identifier - Bait and Switch"
   }
 }

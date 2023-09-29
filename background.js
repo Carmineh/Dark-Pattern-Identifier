@@ -1,13 +1,3 @@
-console.log("Esecuzione Background Script");
-/*
-    !TODO: Implementare Database: indexedDB
-    !TODO:  Inviare una richiesta al 'Popup' per aggiornare Badge [Numero di DP Individuati]
-    !TODO: Implementare metodi: Inserimento, Cancellazione, Modifica, Retrieve Dati 
-    !TODO:  Implementare Sistema Messagistica: Content <=> Background , Popup <=> Background
-    !TODO:  Implementare Promise nei metodi del Database
-	!TODO:  Implementare per ogni richiesta al DB il send per il content script
-*/
-
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 	if (request.message === "delete") {
 		let delete_request = deleteValue(request.payload);
