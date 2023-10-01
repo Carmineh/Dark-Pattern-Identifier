@@ -1,14 +1,14 @@
 {
     "TextComparison" :[
         {"name":"Visualizza Dettagli" , "msg":"It may contain important information"},
-        {"name":"Ulteriori Informazioni" , "msg":"Check for more information"},
-        {"name":"Nota Legale" , "msg":"Information about privacy"},
-        {"name":"Legal Note" , "msg":"Information about privacy"},
+        {"name":"Ulteriori Informazioni" , "msg":"Check the link for more information"},
+        {"name":"Nota Legale" , "msg":"This link contains information about privacy and personal data usage"},
+        {"name":"Legal Note" , "msg":"This link contains information about privacy and personal data usage"},
         {"name":"Più opzioni" , "msg":"Extend to get more info"},
-        {"name":"Legal" , "msg":"Information about privacy"},
-        {"name":"Read More" , "msg":"It may contain important hidden information"},
-        {"name":"More Info" , "msg":"Check for more info"},
-        {"name":"Learn More" , "msg":"It may contain specific information about privacy"},
-        {"name":"View Details" , "msg":"It may contain important information"}
+        {"name":"Legal" , "msg":"This link contains information about privacy and personal data usage"},
+        {"name":"Read More" , "msg":"This link can contain hidden information about the operation"},
+        {"name":"More Info" , "msg":"Check for more information used by the site in the operation"},
+        {"name":"Learn More" , "msg":"It may contain specific information about privacy and personal data usage"},
+        {"name":"View Details" , "msg":"This link contains specific details regarding your data"}
     ] 
 }

@@ -1,13 +1,3 @@
-console.log("Esecuzione Background Script");
-/*
-    !TODO: Implementare Database: indexedDB
-    !TODO: Inviare una richiesta al 'Popup' per aggiornare Badge [Numero di DP Individuati]
-    !TODO: Implementare metodi: Inserimento, Cancellazione, Modifica, Retrieve Dati 
-    !TODO: Implementare Sistema Messagistica: Content <=> Background , Popup <=> Background
-    !TODO: Implementare Promise nei metodi del Database
-	!TODO: Implementare per ogni richiesta al DB il send per il content script
-*/
-
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 	if (request.message === "delete") {
 		let delete_request = deleteValue(request.payload);
@@ -40,7 +30,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 	} else if (request.message === "content__update") {
 		let update_request = updateValue(request.payload);
 	} else if (request.message === "content__retrieve") {
-		console.log("Content Retreve");
+		console.log("Content Retrieve");
 		let retrieve_request = retrieveValue(request.payload);
 
 		retrieve_request.then((res) => {
@@ -76,15 +66,11 @@ let defaultValues = [
 	},
 	{
 		name: "darkPatternIdentified",
-		value: null,
+		value: [{}],
 	},
 	{
 		name: "textComparison",
 		value: {},
-	},
-	{
-		name: "msgList",
-		value: null,
 	},
 ];
 
@@ -96,11 +82,6 @@ let textComparisonArray = fetch("common.json")
 		return response.json();
 	})
 	.then((jsonObject) => {
-<<<<<<< Updated upstream
-		console.log(jsonObject.TextComparison.name);
-		console.log(jsonObject.TextComparison.msg);
-=======
->>>>>>> Stashed changes
 		const setText = defaultValues.map((obj) => {
 			if (obj.name === "textComparison") {
 				obj.value = jsonObject.TextComparison;

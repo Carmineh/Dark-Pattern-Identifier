@@ -1,27 +1,15 @@
-//Script che viene eseguito nel momento in cui viene aperta l'estensione
-console.log("Esecuzione Popup Script");
-/*
-	!TODO Implementare funzionalità frecce nella lista (<)  (>)
-	!TODO Implementare cambiamento focus allo scorrimento della lista
-	!TODO Implementare Aggiornamento numero DP nella lista (#)	
-*/
-
 const listContent = $(".list__index");
 const listDecrement = $("#list__dec");
 const listIncrement = $("#list__inc");
 const switchStatus = $("#switch__status");
-const darkPattern_Type = $("#DP_Type");
+const darkPattern_Type = $("#DP_msg");
 const currentWebsite = $("#CUR__Website");
 
 let currentIndex = 1;
 let maxIndex = 1;
-
-var msgList;
-
-//Retrieving all the elements of DB at the start
-retrieveAllDatabase();
-updateURL();
-updateTextList();
+let currentURL = " ";
+let switchValue;
+let darkPatternIdentified;
 
 //Updating Database when switch change status
 switchStatus.on("change", () => {
@@ -36,7 +24,7 @@ switchStatus.on("change", () => {
 		message: "content__retrieve",
 		payload: "switchValue",
 	});
-	updateURL();
+	updateText("Start");
 });
 
 listIncrement.on("click", (e) => {
@@ -60,29 +48,33 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 		//Retrieve Query
 		if (request.message.includes("switchValue")) {
 			$("#switch__status").prop("checked", request.payload.value);
+			switchValue = request.payload.value;
+			updateText("Start");
 		}
 
 		if (request.message.includes("numDarkPatternIdentified")) {
 			updateCounterList(request.payload.value);
 		}
 
-		if (request.message.includes("msgList")) {
-			console.log("MSGLIST ", msgList);
-			msgList = request.payload.value;
+		if (request.message.includes("darkPatternIdentified")) {
+			darkPatternIdentified = request.payload.value;
+			updateText("Start");
 		}
 	}
 });
+
+//Retrieving all the elements of DB at the start
+retrieveAllDatabase();
 
 // Functions for the list management
 function updateCounterList(numDarkPatternIdentified) {
 	if (numDarkPatternIdentified >= 0) {
 		maxIndex = numDarkPatternIdentified;
 		currentIndex = 0;
-		updateTextList();
+		updateText("DP_List");
 	}
 }
-
-//Functions for the scrolling of the list
+//Dark Pattern List Management
 function nextItemList() {
 	//Click (>): Change Focus on the object
 	//Send a message to content to change focus
@@ -92,10 +84,9 @@ function nextItemList() {
 		} else {
 			currentIndex = currentIndex + 1;
 		}
-		//Send Message to Content with new value [currentIndex]
-		scrollToElement(currentIndex);
-
-		updateTextList();
+		//Update Operations
+		updateText("DP_List");
+		updateText("Message");
 	}
 }
 
@@ -108,42 +99,69 @@ function previousItemList() {
 		} else {
 			currentIndex = currentIndex - 1;
 		}
-		//Send Message to Content with new value [currentIndex]
-		scrollToElement(currentIndex);
-
-		updateTextList();
+		//Update Operations
+		updateText("DP_List");
+		updateText("Message");
 	}
 }
 
-function updateTextList() {
-	if (switchStatus.is(":checked")) {
-		updateURL();
-		let newString = currentIndex + " out of " + maxIndex;
-		listContent.text(newString);
-		console.log("INDEX ", currentIndex);
-		if (currentIndex > 0) {
-			darkPattern_Type.text(msgList[currentIndex - 1]);
-		} else {
-			darkPattern_Type.text("...");
+function updateText(operation) {
+	if (switchValue) {
+		switch (operation) {
+			default:
+				console.log("Default Case");
+				break;
+
+			case "Start":
+				getURL().then((url) => {
+					currentURL = url;
+					updateText("URL");
+				});
+				updateText("Message");
+				updateCounterList("DP_List");
+				break;
+
+			case "URL":
+				currentWebsite.text(currentURL);
+				break;
+
+			case "Message":
+				if (currentIndex - 1 >= 0 && darkPatternIdentified != null) {
+					if (
+						darkPatternIdentified[currentIndex - 1].message !=
+						"Disguised Button"
+					) {
+						darkPattern_Type.text(
+							darkPatternIdentified[currentIndex - 1].message
+						);
+					} else {
+						darkPattern_Type.text(
+							"Potential Hidden Button. Pay attention to what you are doing"
+						);
+					}
+				} else {
+					darkPattern_Type.text(" ");
+				}
+
+			case "DP_List":
+				let newString = currentIndex + " out of " + maxIndex;
+				listContent.text(newString);
+				scrollToElement(currentIndex);
+				break;
 		}
 	} else {
 		listContent.text("Activate Switch to track DP");
-		darkPattern_Type.text(" ");
+		darkPattern_Type.text("");
+		currentWebsite.text("");
 	}
 }
 
-function updateURL() {
-	if (switchStatus.is(":checked")) {
-		//Update Current Site URL
-		chrome.tabs.query({ active: true, lastFocusedWindow: true }, (tabs) => {
-			let url = tabs[0].url;
-			var page = url.substring(0, url.indexOf("/", 9) + 1);
-			currentWebsite.text(page);
-			console.log("URL ", page);
-		});
-	} else {
-		currentWebsite.text(" ");
-	}
+async function getURL() {
+	let queryOptions = { active: true, lastFocusedWindow: true };
+	let tabs = await chrome.tabs.query(queryOptions);
+	let url = tabs[0].url;
+	var url_cut = url.substring(0, url.indexOf("/", 9) + 1);
+	return url_cut;
 }
 
 function sendMessageContent() {
@@ -170,11 +188,6 @@ function retrieveAllDatabase() {
 	chrome.runtime.sendMessage({
 		message: "retrieve",
 		payload: "darkPatternIdentified",
-	});
-
-	chrome.runtime.sendMessage({
-		message: "retrieve",
-		payload: "msgList",
 	});
 }
 

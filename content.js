@@ -1,15 +1,7 @@
-//Script che viene eseguito nel momento in cui viene caricata una nuova pagina
-/*
-    !TODO: Inviare una richiesta al database quando viene individuato un DP [Verificato mediante algoritmo]
-    !TODO: Disabilitare 'Highlight' di link/bottoni se stato Switch = False
-	!TODO: ALGORITMO
-*/
 var textComparisonList = [];
 var switchValue;
 var verifiedElements = [];
 $(window).on("load", () => {
-	console.log("Esecuzione Content Script");
-
 	chrome.runtime.sendMessage({
 		message: "content__retrieve",
 		payload: "textComparison",
@@ -31,7 +23,6 @@ $(window).on("load", () => {
 			//Retrieve Query
 			if (request.message.includes("switchValue")) {
 				switchValue = request.payload.value;
-				console.log("[DEBUG] " + switchValue);
 				findDarkPattern();
 			} else if (request.message.includes("textComparison")) {
 				textComparisonList = request.payload.value;
@@ -40,19 +31,17 @@ $(window).on("load", () => {
 		}
 		if (request.message.includes("scrollTo")) {
 			pos = request.payload;
-			if (pos > 0) {
-				verifiedElements[pos - 1].scrollIntoView();
+			if (pos - 1 >= 0) {
+				verifiedElements[pos - 1].element.scrollIntoView();
+				verifiedElements[pos - 1].element.style.border = "2px solid red";
 			} else {
 				window.scrollTo(0, 0);
 			}
 		}
 	});
-
-	// findDarkPattern();
-	//updateElementList(45, null); => Test Call badge update
 });
 
-function updateElementList(numElements, elements, msg) {
+function updateElementList(numElements, elements) {
 	if (switchValue) {
 		chrome.runtime.sendMessage({
 			message: "update",
@@ -68,15 +57,6 @@ function updateElementList(numElements, elements, msg) {
 			payload: {
 				name: "darkPatternIdentified",
 				value: elements,
-			},
-		});
-
-		//Send a reuqest to DB to save the information hidden that have been found
-		chrome.runtime.sendMessage({
-			message: "update",
-			payload: {
-				name: "msgList",
-				value: msg,
 			},
 		});
 		//Send a request to DB to update the value of the numOfDP
@@ -103,21 +83,12 @@ function updateBadge(newValue) {
 function findDarkPattern() {
 	const checkedElements = verifyElements();
 
-	let elements = checkedElements[0];
-	let msg = checkedElements[1];
-
-	console.log(elements.length === msg.length);
+	console.log("[findDarkPattern] ", checkedElements);
 
 	if (switchValue) {
-		elements.forEach((elem) => {
-			elem.style.border = "2px solid red";
-		});
-		updateElementList(elements.length, elements, msg);
+		updateElementList(checkedElements.length, checkedElements);
 	} else {
-		elements.forEach((elem) => {
-			elem.style.border = "none";
-		});
-		updateElementList(0, elements);
+		updateElementList(0, checkedElements);
 	}
 }
 
@@ -126,7 +97,6 @@ function verifyElements() {
 	const links = document.querySelectorAll("a");
 
 	verifiedElements = [];
-	msgList = [];
 
 	buttons.forEach((elem) => {
 		let computedStyle = window.getComputedStyle(elem);
@@ -136,10 +106,10 @@ function verifyElements() {
 		const threshold = 0.5;
 
 		if (alpha < threshold && alpha != 0) {
-			verifiedElements.push(elem);
+			verifiedElements.push({ element: elem, message: "Disguised Button" });
 		} else {
 			if (textComparisonList.includes(elem.text)) {
-				verifiedElements.push(elem);
+				verifiedElements.push({ element: elem, message: elem.text });
 			}
 		}
 	});
@@ -147,11 +117,9 @@ function verifyElements() {
 	links.forEach((elem) => {
 		textComparisonList.forEach((obj) => {
 			if (obj.name === elem.text) {
-				verifiedElements.push(elem);
-				msgList.push(obj.msg);
+				verifiedElements.push({ element: elem, message: obj.msg });
 			}
 		});
 	});
-
-	return [verifiedElements, msgList];
+	return verifiedElements;
 }
