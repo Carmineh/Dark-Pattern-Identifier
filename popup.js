@@ -2,12 +2,13 @@ const listContent = $(".list__index");
 const listDecrement = $("#list__dec");
 const listIncrement = $("#list__inc");
 const switchStatus = $("#switch__status");
-const darkPattern_Type = $("#DP_msg");
+const darkPattern_Message = $("#DP_msg");
+const darkPattern_Link = $("#DP_Link");
 const currentWebsite = $("#CUR__Website");
 
 var darkPatternList;
-let currentIndex = 1;
-let maxIndex = 1;
+let currentIndex = 0;
+let maxIndex = 0;
 let switchValue;
 
 //Updating Database when switch change status
@@ -59,7 +60,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 		if (request.message.includes("numDarkPatternIdentified")) {
 			updateCounterList(request.payload.value);
 		}
-		if (request.message.includes("darkPatternList")) {
+		if (request.message.includes("darkPatternIdentified")) {
 			darkPatternList = request.payload.value;
 		}
 	}
@@ -128,10 +129,12 @@ function updateText(operation) {
 				break;
 
 			case "Message":
-				if (currentIndex - 1 >= 0)
-					// darkPattern_Type.text(msgList[currentIndex - 1]);
-					darkPattern_Type.text("Message Text");
-				else darkPattern_Type.text(" ");
+				if (currentIndex - 1 >= 0) {
+					darkPattern_Link.attr("href", darkPatternList[currentIndex - 1].link);
+					darkPattern_Message.show();
+				} else {
+					darkPattern_Message.hide();
+				}
 
 			case "DP_List":
 				let newString = currentIndex + " out of " + maxIndex;
@@ -141,7 +144,7 @@ function updateText(operation) {
 		}
 	} else {
 		listContent.text("Activate Switch to track DP");
-		darkPattern_Type.text(" ");
+		darkPattern_Message.text(" ");
 		currentWebsite.text("");
 	}
 }

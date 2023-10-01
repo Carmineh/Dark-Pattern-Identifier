@@ -1,11 +1,3 @@
-/*
-Colori usati:
-    !TODO Scegliere pattern colori da usare;
-    !TODO Rendere tutti i colori usati variabili;
-    !TODO Aggiungere Switch nell'header;
-    !TODO Modificare Main__Section (Centrare e cambiare pattern colori).
-*/
-
 :root{
     --background: #1f1f1f;
     --div_bg: #393939;
@@ -24,7 +16,6 @@ body{
 
 /* HEADER SECTION*/
 .header{
-    /*border:2px solid red;*/
     height: 20%;
     display: flex;
     flex-direction: row;
@@ -68,8 +59,6 @@ body{
     flex-direction: row;
     justify-content: center;
     height: 50px;
-    /* margin-top: 1em; */
-    /* border:2px solid white; */
     color: var(--text);
 }
 
@@ -87,25 +76,26 @@ body{
 }
 
 #DP_msg{
-    text-decoration: none;
-    font-weight: 500;
     color: var(--text);
     display: flex;
     justify-content: center;
 }
 
 #DP_Type-Title{
-    text-decoration: none;
-    font-weight: 500;
     color: var(--text);
     display: flex;
-    /* justify-content: center; */
 }
 
-/* .CUR__WSContainer{
-    border: 1px solid red;
-    margin-top: 25px;
-} */
+#DP_Link{
+    margin-left: 5px;
+    color: var(--gold);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+#DP_Link:hover{
+    color: white;
+}
 
 #CUR__Website{ 
     margin-top: 5px;
@@ -116,7 +106,6 @@ body{
 
 /* FOOTER SECTION */
 .footer{
-    /* border: 2px solid purple; */
     height: 20%;
     margin-top: 1.4em;
 }

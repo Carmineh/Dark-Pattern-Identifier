@@ -30,11 +30,10 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 	} else if (request.message === "content__update") {
 		let update_request = updateValue(request.payload);
 	} else if (request.message === "content__retrieve") {
-		console.log("Content Retreve");
+		console.log("Content Retrieve");
 		let retrieve_request = retrieveValue(request.payload);
 
 		retrieve_request.then((res) => {
-			console.log("AAA " + res);
 			chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
 				var activeTab = tabs[0];
 				chrome.tabs.sendMessage(activeTab.id, {

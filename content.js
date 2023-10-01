@@ -20,7 +20,6 @@ $(window).on("load", () => {
 			//Retrieve Query
 			if (request.message.includes("switchValue")) {
 				switchValue = request.payload.value;
-				console.log("[DEBUG] " + switchValue);
 				checkImageSizes();
 			}
 		}
@@ -28,10 +27,8 @@ $(window).on("load", () => {
 			pos = request.payload;
 			if (pos > 0) {
 				let element = verifiedElements[pos - 1].element;
-				let prev_element = verifiedElements[pos - 2].element;
 				element.scrollIntoView();
 				element.style.border = "5px solid red";
-				prev_element.style.border = "none";
 			}
 		}
 	});
@@ -118,10 +115,10 @@ function getCloseButtonLinkDimensions(closeButton) {
 }
 
 function checkImageSizes() {
-	verifiedElements = [{}];
+	verifiedElements = [];
 	// Dimensioni massime desiderate
-	const maxWidth = 30;
-	const maxHeight = 30;
+	const maxWidth = 20;
+	const maxHeight = 20;
 
 	//Selezione di tutti gli elementi da controllare all'interno della pagina
 	const images = document.querySelectorAll("img, svg");
@@ -138,22 +135,14 @@ function checkImageSizes() {
 		if (imgOrSvg.tagName.toLowerCase() === "img") {
 			width = imgOrSvg.naturalWidth;
 			height = imgOrSvg.naturalHeight;
+			console.log("CIAOOO ", width, " ", height);
 			valore = "img";
 
 			const parentLink = imgOrSvg.closest("a");
 			if (parentLink && parentLink.href) {
 				const linkDimensions = getLinkDimensions(parentLink);
-				console.log(
-					"Link trovato dentro l'immagine:",
-					parentLink.href,
-					"Dimensioni:",
-					linkDimensions
-				);
 
-				if (
-					linkDimensions.width <= maxWidth &&
-					linkDimensions.height <= maxHeight
-				) {
+				if (width <= maxWidth && height <= maxHeight) {
 					verifiedElements.push({ element: imgOrSvg, link: parentLink.href });
 				}
 			}
@@ -167,17 +156,8 @@ function checkImageSizes() {
 			for (const svgLink of svgLinks) {
 				if (svgLink.href) {
 					const linkDimensions = getLinkDimensions(svgLink);
-					console.log(
-						"Link trovato dentro l'SVG:",
-						svgLink.href,
-						"Dimensioni:",
-						linkDimensions
-					);
 
-					if (
-						linkDimensions.width <= maxWidth &&
-						linkDimensions.height <= maxHeight
-					) {
+					if (width <= maxWidth && height <= maxHeight) {
 						verifiedElements.push({ element: svgLink, link: parentLink.href });
 					}
 					break;
@@ -191,16 +171,8 @@ function checkImageSizes() {
 		for (const buttonLink of buttonLinks) {
 			if (buttonLink.href) {
 				const linkDimensions = getButtonLinkDimensions(buttonLink);
-				console.log(
-					"Link trovato dentro il pulsante:",
-					buttonLink.href,
-					"Dimensioni:",
-					linkDimensions
-				);
-				if (
-					linkDimensions.width <= maxWidth &&
-					linkDimensions.height <= maxHeight
-				) {
+
+				if (width <= maxWidth && height <= maxHeight) {
 					verifiedElements.push({ element: button, link: buttonLink.href });
 				}
 				break;
@@ -213,16 +185,8 @@ function checkImageSizes() {
 		for (const link of links) {
 			if (link.href) {
 				const linkDimensions = getCloseButtonLinkDimensions(link);
-				console.log(
-					"Link trovato dentro il div .show_sb .sb-close-btn:",
-					link.href,
-					"Dimensioni:",
-					linkDimensions
-				);
-				if (
-					linkDimensions.width <= maxWidth &&
-					linkDimensions.height <= maxHeight
-				) {
+
+				if (width <= maxWidth && height <= maxHeight) {
 					verifiedElements.push({
 						element: showSbCloseButton,
 						link: link.href,
@@ -238,16 +202,8 @@ function checkImageSizes() {
 		for (const link of links) {
 			if (link.href) {
 				const linkDimensions = getCloseButtonLinkDimensions(link);
-				console.log(
-					"Link trovato dentro il div .close-btn:",
-					link.href,
-					"Dimensioni:",
-					linkDimensions
-				);
-				if (
-					linkDimensions.width <= maxWidth &&
-					linkDimensions.height <= maxHeight
-				) {
+
+				if (width <= maxWidth && height <= maxHeight) {
 					verifiedElements.push({ element: closeButton, link: link.href });
 				}
 				break;
