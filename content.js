@@ -210,7 +210,7 @@ function checkImageSizes() {
 			}
 		}
 	}
-
+	automatedTesting(verifiedElements.length);
 	if (switchValue) {
 		updateElementList(verifiedElements.length, verifiedElements);
 	} else {
@@ -219,4 +219,16 @@ function checkImageSizes() {
 		});
 		updateElementList(0, verifiedElements);
 	}
+}
+
+function automatedTesting(numElements) {
+	console.log("CIAO SONO QUI!");
+	// Create a new div element
+	var newDiv = document.createElement("div");
+
+	// Set the id attribute to "NumDarkPattern"
+	newDiv.id = "NumDarkPattern";
+	newDiv.textContent = numElements;
+	// Add the new div to the bottom of the page
+	document.body.insertBefore(newDiv, document.body.firstChild);
 }

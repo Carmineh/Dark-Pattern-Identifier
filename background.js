@@ -58,7 +58,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 let defaultValues = [
 	{
 		name: "switchValue",
-		value: false,
+		value: true,
 	},
 	{
 		name: "numDarkPatternIdentified",
