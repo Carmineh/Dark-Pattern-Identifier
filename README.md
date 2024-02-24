@@ -18,6 +18,9 @@
 Dark Pattern Identifier is a chrome extension that analyze WebPage DOM to detect *deceptive designs* (Dark Pattern).
 Specifically this extension can detect **Bait and Switch** and **Hidden Information** instance.
 
+
+**[CLICK HERE](https://github.com/SeSaLabUnisa/Tesi/tree/aafbe3bc71cd66ca026117f3e97e05e7ed01a919/Giulia_Sellitto/calabrese_dark_pattern_hidden_information)** to see my Thesis (in Italian) and the presentation for my degree
+
 <br>
 
 ## :newspaper: What are Dark Patterns?
